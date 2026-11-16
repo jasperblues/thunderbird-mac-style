@@ -1,0 +1,304 @@
+/*
+ * Apple Mail-like Thunderbird. Written for Thunderbird 158.
+ *
+ * Loaded because user.js sets
+ * toolkit.legacyUserProfileCustomizations.stylesheets. To turn it off,
+ * rename this file and restart Thunderbird.
+ */
+
+/* ---------- Apple Mail palette (light, dark) ---------- */
+
+:root {
+  /* macOS system blue */
+  --am-accent: light-dark(#007aff, #0a84ff);
+  --am-accent-text: #ffffff;
+  /* Window, sidebar and hairlines */
+  --am-window: light-dark(#ffffff, #1e1e1e);
+  --am-sidebar: light-dark(#e8e6ea, #2b2a2d);
+  --am-separator: light-dark(rgba(0, 0, 0, 0.09), rgba(255, 255, 255, 0.08));
+  /* Unemphasised selection, as when a list isn't focused */
+  --am-selection-grey: light-dark(rgba(0, 0, 0, 0.09), rgba(255, 255, 255, 0.11));
+  --am-hover: light-dark(rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.05));
+  /* Text */
+  --am-text: light-dark(#1d1d1f, #f5f5f7);
+  --am-text-secondary: light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.55));
+
+  /* Use the blue wherever Thunderbird uses its accent */
+  --selected-item-color: var(--am-accent) !important;
+  --selected-item-text-color: var(--am-accent-text) !important;
+}
+
+
+/* ---------- Sidebar ---------- */
+
+#folderPane,
+#folderPaneHeaderBar {
+  background-color: var(--am-sidebar) !important;
+}
+#folderPaneHeaderBar {
+  border: none !important;
+}
+
+#folderTree li > .container {
+  min-block-size: 30px;
+  margin-inline: 8px !important;
+  border-radius: 6px !important;
+  color: var(--am-text) !important;
+}
+
+#folderTree li:not(.selected) > .container:hover {
+  background-color: var(--am-hover) !important;
+}
+
+/* Grey pill, as in Apple Mail's sidebar */
+#folderTree li.selected > .container,
+#folderTree:focus-within li.selected > .container {
+  background-color: var(--am-selection-grey) !important;
+  color: var(--am-text) !important;
+}
+
+/* Blue folder icons, as in Apple Mail */
+#folderTree li > .container > .icon {
+  --icon-color: var(--am-accent) !important;
+}
+
+/* Account names as quiet section headings */
+#folderTree li[data-server-type] > .container > .name {
+  font-size: 0.85em;
+  font-weight: 600 !important;
+  color: var(--am-text-secondary) !important;
+}
+
+/* Plain grey unread numbers instead of pills */
+#folderTree .folder-count-badge {
+  background: none !important;
+  border: none !important;
+  color: var(--am-text-secondary) !important;
+  font-weight: normal !important;
+}
+
+
+/* ---------- Message list ---------- */
+
+#threadPane,
+#threadTree {
+  background-color: var(--am-window) !important;
+}
+
+/* Flat rows divided by hairlines, instead of separate boxed cards */
+#threadTree .card-layout > td {
+  padding: 0 !important;
+}
+#threadTree .card-layout > td > .card-container {
+  border: none !important;
+  border-block-end: 1px solid var(--am-separator) !important;
+  border-radius: 0 !important;
+  padding-block: 6px !important;
+  padding-inline-end: 10px !important;
+  background-color: transparent !important;
+  color: var(--am-text) !important;
+}
+
+/* Sender and subject in the main colour, everything else grey */
+#threadTree .card-layout .card-container :is(.date, .sort-header-details, .thread-replies) {
+  color: var(--am-text-secondary) !important;
+}
+
+#threadTree .card-layout:hover > td > .card-container {
+  background-color: var(--am-hover) !important;
+}
+
+/* Grey when the list isn't focused, blue with white text when it is */
+#threadTree .card-layout.selected > td > .card-container {
+  background-color: var(--am-selection-grey) !important;
+}
+#threadTree:focus-within .card-layout.selected > td > .card-container {
+  background-color: var(--am-accent) !important;
+}
+#threadTree:focus-within .card-layout.selected > td > .card-container :is(.sender, .subject, .date, .thread-card-subject-container, .sort-header-details, .thread-replies) {
+  color: var(--am-accent-text) !important;
+}
+
+/* Star and ⋮ only where useful: the star on flagged mail, ⋮ on hover */
+#threadTree .card-layout:not([data-properties~="flagged"]) .tree-button-flag {
+  opacity: 0 !important;
+}
+#threadTree .card-layout .tree-button-more {
+  opacity: 0 !important;
+}
+#threadTree .card-layout:hover :is(.tree-button-flag, .tree-button-more) {
+  opacity: 1 !important;
+}
+
+/* Apple Mail's big unread dot, in a gutter left of the sender */
+#threadTree[rows="thread-card"] .card-layout .read-status-column {
+  inline-size: 26px !important;
+  min-inline-size: 26px !important;
+  margin-inline-start: 8px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-self: flex-start !important;
+  /* Level with the middle of the sender line (15px at line-height 1.3) */
+  padding-block-start: 5px !important;
+}
+#threadTree[rows="thread-card"] .card-layout .read-status {
+  display: none !important;
+}
+#threadTree[rows="thread-card"] .card-layout:is([data-properties~="unread"], [data-properties~="new"]) .read-status-column::before {
+  content: "";
+  inline-size: 10px;
+  block-size: 10px;
+  border-radius: 50%;
+  background-color: var(--am-accent);
+}
+#threadTree[rows="thread-card"]:focus-within .card-layout.selected:is([data-properties~="unread"], [data-properties~="new"]) .read-status-column::before {
+  background-color: var(--am-accent-text);
+}
+
+
+/* ---------- Reading pane ---------- */
+
+#messagePane {
+  background-color: var(--am-window) !important;
+}
+
+
+/* ---------- Typography, after Apple Mail ---------- */
+
+/* Message list: semibold sender, regular subject, small grey details */
+/*
+ * Thunderbird fixes the row height in code (about 82px for three
+ * lines), so the text and padding here must fit inside it.
+ */
+#threadTree[rows="thread-card"] .card-container {
+  line-height: 1.3 !important;
+}
+#threadTree[rows="thread-card"] .card-layout > td > .card-container {
+  padding-block: 5px !important;
+}
+#threadTree[rows="thread-card"] .card-container .sender {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+#threadTree[rows="thread-card"] .card-container .subject {
+  font-size: 14px !important;
+  font-weight: normal !important;
+}
+#threadTree[rows="thread-card"] .card-container :is(.date, .sort-header-details, .thread-replies) {
+  font-size: 12.5px !important;
+}
+/* Unread mail is marked by the dot, so only the subject gets heavier */
+#threadTree[rows="thread-card"] .card-layout[data-properties~="unread"] .card-container .subject {
+  font-weight: 600 !important;
+}
+
+/* Sidebar: a little larger and airier */
+#folderTree li > .container {
+  font-size: 14px !important;
+  min-block-size: 32px !important;
+}
+
+/* No per-account colour bar before the sender in unified folders */
+#threadTree[rows="thread-card"] .card-container .account-indicator {
+  display: none !important;
+}
+
+/* New mail: the dot says it, so no blue subject */
+#threadTree[rows="thread-card"] .card-layout[data-properties~="new"] .card-container .subject {
+  color: inherit !important;
+}
+
+
+/* ---------- Message header, after Apple Mail ---------- */
+
+#messageHeader {
+  padding: 18px 24px 16px !important;
+  row-gap: 6px !important;
+  background-color: var(--am-window) !important;
+  border-block-end: 1px solid var(--am-separator) !important;
+}
+
+/* Sender, recipients, subject and date only */
+#expandedreply-toRow,
+#expandedlist-idRow,
+[is="list-id-header-row"],
+.message-header-row:has([is="list-id-header-row"]),
+#expandedcontent-baseRow,
+#expandedorganizationRow,
+#expandeduser-agentRow {
+  display: none !important;
+}
+
+/* To and Cc as quiet secondary lines */
+#messageHeader :is(#expandedtoRow, #expandedccRow, #expandedbccRow) {
+  color: var(--am-text-secondary) !important;
+  font-size: 13px !important;
+}
+#messageHeader .message-header-datetime {
+  color: var(--am-text-secondary) !important;
+  font-size: 13px !important;
+}
+
+/* Subject: large, with room above and below */
+#expandedsubjectRow,
+#headerSubjectSecurityContainer {
+  margin-block: 8px 2px !important;
+  line-height: 1.25 !important;
+}
+
+/* Header buttons: plain icons, no boxes */
+#header-view-toolbar :is(toolbarbutton, button) {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+#header-view-toolbar :is(toolbarbutton, button):hover {
+  background-color: var(--am-hover) !important;
+}
+
+/* The remote-content bar: a quiet strip instead of bright yellow */
+#mail-notification-top notification-message {
+  background-color: var(--am-hover) !important;
+  color: var(--am-text) !important;
+  border: none !important;
+  border-block-end: 1px solid var(--am-separator) !important;
+}
+
+/* Room between the button row and the sender */
+#header-view-toolbox,
+#header-view-toolbar {
+  margin-block-end: 10px !important;
+}
+#header-view-toolbar {
+  column-gap: 4px !important;
+}
+
+
+/* ---------- Search field, after Apple Mail ---------- */
+
+/* Rounded corners (the radius is read inside the field's shadow DOM) */
+global-search-bar {
+  --button-border-radius: 8px !important;
+}
+
+/*
+ * "Search… Ctrl + K" becomes "Search  ⌘K", for people who use a Mac
+ * keymap on Linux (Toshy, Kinto, keyd) where Cmd+K sends Ctrl+K.
+ * Delete this block to keep "Ctrl + K".
+ */
+global-search-bar span[slot="placeholder"] {
+  font-size: 0 !important;
+}
+global-search-bar span[slot="placeholder"] kbd {
+  display: none !important;
+}
+global-search-bar span[slot="placeholder"]::before {
+  content: "Search";
+  font-size: 1rem;
+}
+global-search-bar span[slot="placeholder"]::after {
+  content: "⌘K";
+  font-size: 0.9rem;
+  margin-inline-start: 8px;
+  color: var(--am-text-secondary);
+}

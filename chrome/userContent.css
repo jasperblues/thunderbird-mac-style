@@ -1,0 +1,12 @@
+/*
+ * Message bodies, after Apple Mail: room around the text.
+ * Applies only to mail being displayed, not to web pages.
+ */
+@-moz-document url-prefix("imap:"), url-prefix("imap-message:"),
+               url-prefix("mailbox:"), url-prefix("mailbox-message:"),
+               url-prefix("news:"), url-prefix("ews:") {
+  body {
+    margin: 20px 24px !important;
+    line-height: 1.5;
+  }
+}
