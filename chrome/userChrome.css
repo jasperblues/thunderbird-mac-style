@@ -137,9 +137,9 @@
   margin-inline-start: 8px !important;
   display: flex !important;
   justify-content: center !important;
-  align-self: flex-start !important;
-  /* Level with the middle of the sender line (15px at line-height 1.3) */
-  padding-block-start: 5px !important;
+  /* Centred on the whole row, as in Apple Mail */
+  align-self: stretch !important;
+  align-items: center !important;
 }
 #threadTree[rows="thread-card"] .card-layout .read-status {
   display: none !important;
