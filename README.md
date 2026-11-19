@@ -62,6 +62,10 @@ Font sizes are in the **Typography** section of the same file. Edit the copy in 
 
 This project is not affiliated with Apple or Mozilla.
 
+## A note on email
+
+This stylesheet makes Thunderbird calmer and more Mac-like, but it can only restyle what's there. Email on Linux still feels a bit dated next to Apple Mail, and Thunderbird's layout and workflow come from another era. There's room for a new mail app that feels at home on a modern desktop. Watch this space.
+
 ## License
 
 [MIT](LICENSE)
